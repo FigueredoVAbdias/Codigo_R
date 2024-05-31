@@ -1,0 +1,110 @@
+---
+
+title: "ENCUESTA DE HOGARES, PERSONA 2021"
+output: 
+  flexdashboard::flex_dashboard:
+    orientation: columns
+    vertical_layout: fill
+---
+
+```{r setup, include=FALSE}
+library(flexdashboard)
+library(ggplot2)
+library(plotly)
+library(readxl)
+EH=read_excel("C:/Users/ASUS ViviBooK/OneDrive - Universidad Mayor de San Simón/Documentos/R/EH2021_Persona.xlsx")#POR FAVOR COLOCAR LA DIRECCION DONDE DESCARGO LA BASE DE DATOS "EH2021_Persona.xlsx"
+```
+
+# PAGINA 1
+
+Column {data-width=350}
+-----------------------------------------------------------------------
+
+### Chart A
+
+```{r}
+plot_ly(EH,
+        x=~aestudio,y=~ylab,
+        type = "scatter",mode="markers",
+        marker=list(size=10),
+        color=~s01a_02,colors=c("blue","red")) %>% 
+  layout(title="RELACION INGRESO LABORAL - AÑOS DE ESTUDIO",
+         xaxis=list(title="AÑOS DE ESTUDIO"),yaxis=list(title="INGRESO LABORAL"))
+```
+
+Column {data-width=350}
+-----------------------------------------------------------------------
+### Chart B
+
+```{r}
+plot_ly(EH,x=~s01a_02,y=~ylab,
+        type="box",color=~s01a_02) %>% 
+  layout(title="INGRESO LABORAL POR GENERO",
+         xaxis=list(title="Sexo"),
+         yaxis=list(title="Ingreso Laboral"))
+```
+
+# PAGINA 2
+
+Column {data-width=350}
+-----------------------------------------------------------------------
+### Chart C
+
+```{r}
+plot_ly(EH,
+        labels=~s01a_02,
+        type="pie",
+        marker=list(colors=c("blue","red")),
+        texinfo="label+percent") %>% 
+  layout(title="GENERO (1=HOMBRE, 2=MUJER)")
+```
+
+
+### Chart D
+
+```{r}
+plot_ly(EH,x=~aestudio) %>% 
+  layout(title="AÑOS DE ESTUDIO",xaxis=list(title="años estudio"),yaxis=list(title="Conteo"))
+```
+
+Column {data-width=350}
+-----------------------------------------------------------------------
+
+### Chart E
+```{r}
+plot_ly(EH,
+        x=~area,
+        y=~ylab,
+        type="box",
+        color=~s01a_02) %>% 
+  layout(title="INGRESO LABORAL POR AREA",
+         xaxis=list(title="Area"),
+         yaxis=list(title="Ingreso Laboral"))
+```
+
+# PAGINA 3
+
+Column {data-width=350}
+-----------------------------------------------------------------------
+
+### Chart G
+```{r}
+plot_ly(EH,
+        labels=~area,
+        type="pie",
+        marker=list(colors=c("brown","yellow")),
+        texinfo="label+percent") %>% 
+  layout(title="AREA DE RECIDENCIA (1=Urbano, 2=Rural")
+```
+
+### Chart H
+```{r}
+plot_ly(EH,
+        labels=~s01a_10,
+        type="pie",
+        marker=list(colors=c("blue","red","pink","orange","brown","yellow")),
+        marker=list(legend=c("Soltero","Casado","Conviviente","Separado","Divorciado","Viudo")),
+        texinfo="label+percent") %>% 
+  layout(title="ESTADO CIVIL (1=Soltero/a, 2=Casado/a, 3=Conviviente, 4=Separado, 5=Divorciado/a, 6=Viudo/a)")
+```
+
